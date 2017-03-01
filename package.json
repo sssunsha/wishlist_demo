@@ -1,0 +1,13 @@
+{
+    "name": "wishlist_demo",
+    "version": "0.1",
+    "author": "sssunsha@126.com",
+    "description": "the demo for wishlist with yaas server.",
+    "scripts": {
+        "start": "node wishlist_server.js"
+    },
+    "dependencies": {
+    "express": "3.4.2"
+    }
+}
+
