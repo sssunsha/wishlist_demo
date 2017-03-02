@@ -5,14 +5,18 @@ var oauth = require("./oauth_helper");
 
 function add_wishlist(sreq,sres){
 	console.log("start add_wishlist");
-	var contents = {
-    	name: "add_wishlist3",
-    	type: "test3"
-	};		
+
+	
+	var contents = sreq.body;
+	var owner = contents["owner"];
+	owner = owner.replace(".", "_");
+	owner = owner.replace("@", "_");
+	var path = "/data/" + owner + "/"; 
+	console.log(path);
 	
 	var options = {
 		host: constant.base_host,
-    	path: constant.base_path + constant.tenant + "/"  + constant.client_name+"/data/wishlist/",
+    	path: constant.base_path + constant.tenant + "/"  + constant.client_name + path,
 	    method: 'POST',
 	    headers: {
 	        'Content-Type': 'application/json',
@@ -28,7 +32,7 @@ function add_wishlist(sreq,sres){
   			body += data;
  		}).on('end', function(){
   			sres.send("add_wishlist succeed");
-
+  			console.log(body);
  			});
 		}).on('error', function(e) {
 		  		console.log("Got add_wishlist error: " + e.message);
@@ -74,10 +78,14 @@ function get_wishlist_size (sreq,sres) {
 }
 
 function get_wishlists(sreq,sres){
-	console.log("start get_wishlists");	
+	console.log("start get_wishlists");
+	var params = sreq["params"].toString();
+	var path = "/data" + params+ "/";
+	console.log(path);
+
 	var options = {
 		host: constant.base_host,
-    	path: constant.base_path + constant.tenant + "/"  + constant.client_name+"/data/wishlist/",
+    	path: constant.base_path + constant.tenant + "/"  + constant.client_name + path,
 	    method: 'GET',
 	    headers: {
 	        'Content-Type': 'application/json',
@@ -93,7 +101,7 @@ function get_wishlists(sreq,sres){
  		}).on('end', function(){
  			// console.log("");
   			// console.log(res.headers);
-  			// console.log(body);
+//  			 console.log(body);
   			sres.send(body);
  			});
 		}).on('error', function(e) {
